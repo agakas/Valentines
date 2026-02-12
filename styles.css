@@ -1,0 +1,141 @@
+:root {
+  --bg1: #fdf6f9;
+  --bg2: #eef2ff;
+  --bg3: #fff1e6;
+
+  --accent: #ff6f8e;
+  --no-bg: #e6e6ea;
+  --no-text: #555;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+  background-size: 200% 200%;
+  animation: gradientShift 18s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  z-index: 20;
+}
+
+.yes-button {
+  position: relative;
+  z-index: 30;
+
+  padding: 16px 36px;
+  font-size: 1.15rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 10px 30px rgba(255, 111, 142, 0.35);
+
+  animation: heartbeat 2.2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.08); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+  60% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+#no-container {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+.no-button {
+  position: absolute;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.9rem;
+
+  background: var(--no-bg);
+  color: var(--no-text);
+  cursor: pointer;
+
+  transition:
+    left 0.8s ease,
+    top 0.8s ease,
+    opacity 0.4s ease;
+}
+
+.no-button.fade {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.phrase {
+  position: absolute;
+  font-size: 0.9rem;
+  color: #666;
+  opacity: 0;
+  animation: phraseFade 5s forwards;
+}
+
+@keyframes phraseFade {
+  0% { opacity: 0; transform: translateY(8px); }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+
+#final-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #fff0f5, #f0f4ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: opacity 0.6s ease;
+  z-index: 100;
+}
+
+#final-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.final-content {
+  animation: popIn 0.8s ease forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
