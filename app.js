@@ -3,24 +3,21 @@ const yesButton = document.querySelector(".yes-button");
 const finalScreen = document.getElementById("final-screen");
 
 /* ---------- КОНФИГ ---------- */
-
 const config = {
   driftRadius: 18,
   escapeLimit: 3,
   safeRadius: 180,
-  imageProbability: 0.5 // 0.5 = 50% картинка, 50% текст
+  imageProbability: 0.9 // 90% картинок
 };
 
 /* ---------- МАССИВ КАРТИНОК ---------- */
-
 const popupImages = [
   "assets/cat1.jpg",
   "assets/cat2.jpg",
   // "assets/cat3.png",
 ];
 
-/* ---------- СОСТОЯНИЕ ---------- */
-
+let currentImageIndex = 0; // циклический показ картинок
 let noButtons = [];
 let safeCenter = { x: 0, y: 0 };
 
@@ -41,10 +38,16 @@ function updateSafeCenter() {
 }
 
 /* ---------- СОЗДАНИЕ КНОПОК ---------- */
-
 function createNoButtons() {
   const area = window.innerWidth * window.innerHeight;
-  const count = Math.max(15, Math.floor(area / 20000));
+  let count = Math.max(15, Math.floor(area / 20000));
+
+  // если телефон (узкий экран), увеличиваем количество кнопок
+  if (window.innerWidth <= 768) {
+    count = Math.floor(count * 1.8);
+  }
+
+  const positions = [];
 
   for (let i = 0; i < count; i++) {
     const btn = document.createElement("button");
@@ -52,7 +55,8 @@ function createNoButtons() {
     btn.textContent = randomNoText();
     btn.dataset.escapes = 0;
 
-    placeOutsideSafeZone(btn);
+    placeOutsideSafeZone(btn, positions);
+    positions.push({ x: parseFloat(btn.style.left), y: parseFloat(btn.style.top) });
 
     btn.addEventListener("pointerdown", () => handleNo(btn));
 
@@ -61,24 +65,32 @@ function createNoButtons() {
   }
 }
 
-function placeOutsideSafeZone(btn) {
+function placeOutsideSafeZone(btn, positions = []) {
   let x, y, distance;
+  let safe = false;
 
   do {
     x = Math.random() * (window.innerWidth - 120);
     y = Math.random() * (window.innerHeight - 60);
     distance = Math.hypot(x - safeCenter.x, y - safeCenter.y);
-  } while (distance < config.safeRadius);
+    safe = distance >= config.safeRadius;
+
+    // проверяем, чтобы не накладывалось на другие кнопки
+    for (let pos of positions) {
+      if (Math.hypot(x - pos.x, y - pos.y) < 60) { // минимальное расстояние
+        safe = false;
+        break;
+      }
+    }
+  } while (!safe);
 
   btn.dataset.anchorX = x;
   btn.dataset.anchorY = y;
-
   btn.style.left = x + "px";
   btn.style.top = y + "px";
 }
 
 /* ---------- ПОВЕДЕНИЕ КНОПОК ---------- */
-
 function handleNo(btn) {
   let escapes = Number(btn.dataset.escapes);
 
@@ -91,7 +103,10 @@ function handleNo(btn) {
 }
 
 function relocate(btn) {
-  placeOutsideSafeZone(btn);
+  placeOutsideSafeZone(btn, noButtons.map(b => ({
+    x: parseFloat(b.style.left),
+    y: parseFloat(b.style.top)
+  })));
 }
 
 function vanish(btn) {
@@ -100,7 +115,6 @@ function vanish(btn) {
   const x = parseFloat(btn.style.left);
   const y = parseFloat(btn.style.top);
 
-  // Рандомно: картинка или текст
   if (Math.random() < config.imageProbability && popupImages.length > 0) {
     spawnImage(x, y);
   } else {
@@ -109,7 +123,6 @@ function vanish(btn) {
 }
 
 /* ---------- ТЕКСТ ---------- */
-
 function spawnPhrase(x, y) {
   const phrase = document.createElement("div");
   phrase.className = "phrase";
@@ -122,9 +135,6 @@ function spawnPhrase(x, y) {
 }
 
 /* ---------- КАРТИНКИ ---------- */
-
-let currentImageIndex = 0; // для циклического показа
-
 function spawnImage(x, y) {
   if (popupImages.length === 0) return;
 
@@ -132,18 +142,17 @@ function spawnImage(x, y) {
   img.src = nextImage();
   img.className = "popup-image";
 
-  // Случайный угол и масштаб
+  // случайный угол и scale
   const angle = Math.random() * 40 - 20; // -20° ... +20°
   const scale = 0.8 + Math.random() * 0.4; // 0.8 ... 1.2
 
   img.style.left = x + "px";
   img.style.top = y + "px";
 
-  // Для корректного сочетания с CSS-анимацией translate
   img.style.transform = `rotate(${angle}deg) scale(${scale})`;
+  img.style.animation = "imageFloat 5s forwards";
 
   noContainer.appendChild(img);
-
   setTimeout(() => img.remove(), 5000);
 }
 
@@ -153,13 +162,7 @@ function nextImage() {
   return img;
 }
 
-function randomImage() {
-  const index = Math.floor(Math.random() * popupImages.length);
-  return popupImages[index];
-}
-
 /* ---------- ПЛАВАНИЕ ---------- */
-
 function startDrifting() {
   function animate() {
     noButtons.forEach(btn => {
@@ -181,7 +184,6 @@ function startDrifting() {
 }
 
 /* ---------- YES ---------- */
-
 function handleYes() {
   document.querySelector(".scene").style.opacity = "0";
   setTimeout(() => {
@@ -190,7 +192,6 @@ function handleYes() {
 }
 
 /* ---------- УТИЛИТЫ ---------- */
-
 function randomNoText() {
   const variants = [
     "Нет",
