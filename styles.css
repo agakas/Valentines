@@ -103,7 +103,6 @@ body {
   position: absolute;
   font-size: 0.9rem;
   color: #666;
-  opacity: 0;
   animation: phraseFade 5s forwards;
 }
 
@@ -112,6 +111,33 @@ body {
   10% { opacity: 1; }
   80% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-8px); }
+}
+
+/* --- ВСПЛЫВАЮЩИЕ КАРТИНКИ --- */
+
+.popup-image {
+  position: absolute;
+  width: 120px;
+  pointer-events: none;
+  animation: imageFloat 5s forwards;
+  z-index: 6;
+}
+
+@keyframes imageFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(1.05);
+  }
 }
 
 #final-screen {
