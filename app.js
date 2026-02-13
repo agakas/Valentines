@@ -7,13 +7,14 @@ const config = {
   driftRadius: 18,
   escapeLimit: 3,
   safeRadius: 180,
-  imageProbability: 0.9 // 90% картинок
+  imageProbability: 0.7 // 90% картинок
 };
 
 /* ---------- МАССИВ КАРТИНОК ---------- */
 const popupImages = [
   "assets/cat1.jpg",
   "assets/cat2.jpg",
+  "assets/monkey1.jpg",
   // "assets/cat3.png",
 ];
 
@@ -202,6 +203,7 @@ function randomNoText() {
   const variants = [
     "Нет 🙅‍♀️",
     "Неа ⛔️",
+    "Тюю 🙄",
     "Ни за что 🫣",
     "Вряд ли 🫤",
     "Сомневаюсь 🤷‍♀️",
