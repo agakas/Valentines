@@ -13,6 +13,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -20,6 +25,8 @@ body {
   background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
   background-size: 200% 200%;
   animation: gradientShift 18s ease infinite;
+  position: fixed;
+  width: 100%;
 }
 
 @keyframes gradientShift {
