@@ -5,7 +5,7 @@ const finalScreen = document.getElementById("final-screen");
 /* ---------- КОНФИГ ---------- */
 const config = {
   driftRadius: 18,
-  escapeLimit: 3,
+  escapeLimit: 1,
   safeRadius: 180,
   imageProbability: 0.7 // 90% картинок
 };
