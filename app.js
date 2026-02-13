@@ -15,7 +15,8 @@ const popupImages = [
   "assets/cat1.jpg",
   "assets/cat2.jpg",
   "assets/monkey1.jpg",
-  // "assets/cat3.png",
+  "assets/cat3.jpg",
+  "assets/monkey2.jpg"
 ];
 
 let currentImageIndex = 0; // циклический показ картинок
