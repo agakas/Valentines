@@ -3,14 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Валентинка</title>
+  <title>Да я делал это ночью</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
+  <div id="loader">
+  <div class="heart-wrapper">
+    <svg viewBox="0 0 100 100" class="heart-svg">
+      <defs>
+        <clipPath id="heart-clip">
+          <path d="M50 88
+                   L20 58
+                   A20 20 0 0 1 50 30
+                   A20 20 0 0 1 80 58
+                   Z"/>
+        </clipPath>
+      </defs>
 
+      <!-- Контур -->
+      <path class="heart-outline"
+            d="M50 88
+               L20 58
+               A20 20 0 0 1 50 30
+               A20 20 0 0 1 80 58
+               Z"/>
+
+      <!-- Заполнение -->
+      <rect class="heart-fill" x="0" y="100" width="100" height="100"
+            clip-path="url(#heart-clip)"/>
+    </svg>
+  </div>
+</div>
   <div class="scene">
     <h1 class="title">
-      Ты будешь моей Валентинкой? 💖
+      Оля, ты будешь моей Валентинкой? 🥰
     </h1>
 
     <button class="yes-button">Да ❤️</button>

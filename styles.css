@@ -27,6 +27,46 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #fffafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+
+#loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.heart-svg {
+  width: 120px;
+  height: 120px;
+}
+
+.heart-outline {
+  fill: none;
+  stroke: #ff4d6d;
+  stroke-width: 3;
+}
+
+.heart-fill {
+  fill: #ff4d6d;
+  animation: fillHeart 3s ease forwards;
+}
+
+@keyframes fillHeart {
+  from {
+    y: 100;
+  }
+  to {
+    y: 0;
+  }
+}
 
 .scene {
   position: relative;

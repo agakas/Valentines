@@ -231,3 +231,12 @@ function randomPhrase() {
   ];
   return phrases[Math.floor(Math.random() * phrases.length)];
 }
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const loader = document.getElementById("loader");
+    loader.classList.add("hidden");
+
+    setTimeout(() => loader.remove(), 600);
+  }, 1500);
+});
