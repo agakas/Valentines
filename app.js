@@ -195,70 +195,28 @@ function startDrifting() {
 function handleYes() {
   document.querySelector(".scene").style.opacity = "0";
   setTimeout(() => {
-    finalScreen.classList.remove("hidden");
+    showFinalScreen();
   }, 600);
 }
 
 function showFinalScreen() {
   finalScreen.classList.remove("hidden");
 
-  // Стикеры Love is
-  const stickers = [
-    "assets/vklad1.png",
-    "assets/vklad2.png",
-    "assets/vklad1.png",
-    "assets/vklad2.png",
-    "assets/vklad1.png",
-    "assets/vklad2.png",
-    "assets/vklad1.png",
-    "assets/vklad2.png",
-    "assets/vklad1.png"
-  ];
-
-  const container = document.getElementById("stickers-container");
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-
-  stickers.forEach(src => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.className = "sticker";
-
-    // рандомная позиция и угол
-    const x = Math.random() * (screenWidth - 80);
-    const y = Math.random() * (screenHeight - 80);
-    const angle = Math.random() * 60 - 30;
-
-    img.style.left = x + "px";
-    img.style.top = y + "px";
-    img.style.transform = `rotate(${angle}deg)`;
-
-    container.appendChild(img);
-  });
-
-  // Летающие сердечки
   const heartsContainer = document.getElementById("hearts-container");
 
   function spawnHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
-    heart.innerHTML = "❤️";
+    heart.textContent = "💖";
 
-    const x = Math.random() * (screenWidth - 30);
-    const y = Math.random() * (screenHeight - 30);
-    heart.style.left = x + "px";
-    heart.style.top = y + "px";
+    heart.style.left = Math.random() * window.innerWidth + "px";
 
     heartsContainer.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 4000);
+    setTimeout(() => heart.remove(), 5000);
   }
 
-  // Спавним несколько сердечек каждые 0.5s
   const heartInterval = setInterval(spawnHeart, 500);
-
-  // Останавливаем через 10 секунд
-  setTimeout(() => clearInterval(heartInterval), 10000);
+  setTimeout(() => clearInterval(heartInterval), 9000);
 }
 
 /* ---------- УТИЛИТЫ ---------- */
