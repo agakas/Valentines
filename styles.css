@@ -193,7 +193,6 @@ body {
 #final-screen {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #fff0f5, #f0f4ff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,4 +213,67 @@ body {
 @keyframes popIn {
   0% { transform: scale(0.8); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+#final-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+#final-title {
+  position: absolute;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ff2d55;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(6px);
+  animation: pulse 1.2s infinite, sway 2s infinite alternate;
+  z-index: 10;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes sway {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(10px); }
+}
+
+.sticker {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  pointer-events: none;
+  animation: stickerFloat 6s ease-in-out infinite;
+}
+
+@keyframes stickerFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.heart {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  animation: heartFloat 4s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes heartFloat {
+  0% { transform: translateY(0px) scale(1) rotate(0deg); opacity: 0.8; }
+  50% { transform: translateY(-80px) scale(1.2) rotate(15deg); opacity: 1; }
+  100% { transform: translateY(0px) scale(1) rotate(-15deg); opacity: 0.8; }
 }
